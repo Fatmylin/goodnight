@@ -11,7 +11,7 @@ module API
 
     def create
       friend = User.find(params[:friend_id])
-      friendship = current_user.friendships.new(friend:)
+      friendship = current_user.friendships.find_or_initialize_by(friend:)
       if friendship.save
         render json: { id: friendship.id }
       else

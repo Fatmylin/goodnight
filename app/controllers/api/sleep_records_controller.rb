@@ -1,7 +1,7 @@
 module API
   class SleepRecordsController < ApplicationController
     def index
-      render json: { sleep_records: current_user.sleep_records.valid.order(created_at: :desc) }
+      render json: { sleep_records: current_user.sleep_records.order(created_at: :desc) }
     end
 
     def create

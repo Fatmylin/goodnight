@@ -10,6 +10,10 @@ module API
     end
 
     def update
+      if SleepRecord::BEHAVIORS.exclude?(params[:clock_action])
+        return render json: { errors: "Not supported action." }
+      end
+
       sleep_record = current_user.sleep_records.find(params[:id])
       if sleep_record.update(sleep_record_params)
         render json: { id: sleep_record.id }
@@ -21,14 +25,11 @@ module API
     private
 
     def sleep_record_params
-      if (params[:clock_action] == "start")
-        {
-          start_at: Time.now
-        }
-      else
-        {
-          finish_at: Time.now
-        }
+      case params[:clock_action]
+      when "start"
+        { start_at: Time.now }
+      when "finish"
+        { finish_at: Time.now }
       end
     end
   end

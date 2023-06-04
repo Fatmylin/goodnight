@@ -1,4 +1,6 @@
 class SleepRecord < ApplicationRecord
+  BEHAVIORS = ["start", "finish"].freeze
+
   belongs_to :user
 
   scope :valid, -> { where("start_at is not NULL OR finish_at is not NULL")}

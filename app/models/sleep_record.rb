@@ -23,7 +23,7 @@ class SleepRecord < ApplicationRecord
     if (start_at.nil? && finish_at.present?)
       errors.add(:base, "Start at is missing.")
     elsif start_at > finish_at
-      errors.add(:base, "Finish at should be after start at")
+      errors.add(:base, "Finish at should be after start at.")
     end
   end
 end

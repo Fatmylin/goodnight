@@ -23,15 +23,13 @@ RSpec.describe API::FriendshipsController, type: :request do
           "friendships" => [
             {
               "friend" => {
-                "created_at" => "2023-06-04T06:19:14.764Z", 
-                "email" => "test2@gmail.com",
-                "id" => 2,
-                "name" => "test account2",
-                "updated_at" => "2023-06-04T06:19:14.764Z"
+                "email" => user_b.email,
+                "id" => user_b.id,
+                "name" => user_b.name,
               },
-              "friend_id"=>2,
-              "id"=>1,
-              "user_id"=>1
+              "friend_id" => friendship_to_user_b.friend_id,
+              "id" => friendship_to_user_b.id,
+              "user_id" => friendship_to_user_b.user_id
             }
           ]
         )
@@ -59,7 +57,7 @@ RSpec.describe API::FriendshipsController, type: :request do
     end
   end
 
-  describe "DESTROY /api/friendships/{:id}" do
+  describe "DELETE /api/friendships/{:id}" do
     let!(:friendship_to_user_b) { create(:friendship, user: user_a, friend: user_b) }
 
     context "without auth token" do
@@ -71,7 +69,7 @@ RSpec.describe API::FriendshipsController, type: :request do
     end
 
     context "with auth token" do
-      it "create a new friendship" do
+      it "destroy a new friendship" do
         expect{ 
           delete "/api/friendships/#{friendship_to_user_b.id}",
                  headers: { Authorization: "Bearer #{user_a.token}" }

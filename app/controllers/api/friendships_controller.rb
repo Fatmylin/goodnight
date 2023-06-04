@@ -4,7 +4,7 @@ module API
       render json: { 
         friendships: current_user.friendships.map do |friendship|
           friend = friendship.friend
-          friendship.as_json.merge(friend: friend.as_json.except("token"))
+          friendship.as_json.merge(friend: friend.as_json(only: %i[id email name]))
         end
       }
     end
